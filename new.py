@@ -49,6 +49,9 @@ if option:
             st.write('Quận đã chọn: ', ', '.join(option))
             # st.select_slider("Displayed values:", ["Normalized", "Absolute"])
 
+def something_is_in_the_way(a):
+    st.write(str(a))
+
 
 
 url = 'https://youtu.be/dQw4w9WgXcQ'
@@ -56,5 +59,7 @@ url = 'https://youtu.be/dQw4w9WgXcQ'
 if st.button('_do not click_ **this**',type='primary'):
     webbrowser.open_new_tab(url)
     st.caption('i told ya')
+    something_is_in_the_way(123)
+
 
 
