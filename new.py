@@ -56,7 +56,7 @@ def something_is_in_the_way(a):
 
 url = 'https://youtu.be/dQw4w9WgXcQ'
 
-if st.button('_do not click_ **this**',type='primary'):
+if st.button('_do not click_ **this**'):
     webbrowser.open_new_tab(url)
     st.caption('i told ya')
     something_is_in_the_way(123)
