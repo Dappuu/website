@@ -36,7 +36,7 @@ with col2:
     st.markdown('Your choice, your comfort')
 # with col3: 
     # st.title('Represent')
-st.markdown('# 30 days of NNN is over')
+# st.markdown('# 30 days of NNN is over')
 
 # df = pd.read_csv('Database.csv')
 # st.write(df)
@@ -83,18 +83,12 @@ with st.expander('Bộ lọc'):
 #                 st.write('Quận đã chọn: ', ', '.join(option))
 #             # st.select_slider("Displayed values:", ["Normalized", "Absolute"])
 
-def something_is_in_the_way(a):
-    st.write(str(a))
-    st.write("big booty")
-
-
-
-url = 'https://youtu.be/dQw4w9WgXcQ'
+url = 'https://youtu.be/'
+url_= 'dQw4w9WgXcQ'
 
 if st.button('_do not click_ **this**'):
-    webbrowser.open_new_tab(url)
+    webbrowser.open_new_tab(url+url_)
     st.caption('i told ya')
-    something_is_in_the_way(123)
 
 
 
