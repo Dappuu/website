@@ -9,6 +9,8 @@ from PIL import Image
 
 
 
+st.balloons()
+
 col1, col2, col3 = st.columns((2,4,1))
 with col1:
     st.image(Image.open('dark_logo.png'))
