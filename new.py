@@ -26,6 +26,9 @@ with col2:
     # st.title('Represent')
 st.markdown('# 30 days of NNN is over')
 
+df = pd.read_csv('Database.csv')
+st.write(df)
+
 with st.form("my_form"):
     option = st.multiselect(
         'Quận',
@@ -38,16 +41,35 @@ with st.form("my_form"):
 if not option and submitted==True:
     st.warning("Hãy chọn quận!!",icon="⚠️")
 
-if option:
-    with st.form("serching_form"):
-        st.write('Quận đã chọn: ', ', '.join(option))   
-        with st.expander("filter"):
-        # st.text("Filter")
-            money = st.slider('Chọn giá tiền (triệu/m²)',0, 200, (0, 50))
-        search = st.form_submit_button("Search")
-        if search:
-            st.write('Quận đã chọn: ', ', '.join(option))
-            # st.select_slider("Displayed values:", ["Normalized", "Absolute"])
+with st.expander('Bộ lọc'):
+        # filter = st.button('Bộ lọc')
+    if option:
+        # with st.form("price"):
+            # st.write('Quận đã chọn: ', ', '.join(option))   
+            # st.text("Filter")
+        money = st.slider('Giá tiền (triệu/m²)',0, 200, (0, 50))
+        area = st.slider('Diện tích m²', 0, 500, (0, 70))
+        col1, col2 = st.columns((1,1))
+        with col1:
+            vs = st.selectbox('Số phòng vệ sinh', (1,2,3))
+        with col2:
+            sleep = st.selectbox('Số phòng ngủ', (1,2,3,4,5))
+    search = st.button("Search")
+    if search:
+        # st.write('Quận đã chọn: ', ', '.join(option))
+        st.write('Click con cặc')
+                # st.select_slider("Displayed values:", ["Normalized", "Absolute"])
+
+# with col2:
+#     if option:
+#         with st.form('area'):
+#             with st.expander("filter"):
+#             # st.text("Filter")
+#                 money = st.slider('Diện tích (m²)', 0, 200, (0, 50))
+#             search = st.form_submit_button("Search")
+#             if search:
+#                 st.write('Quận đã chọn: ', ', '.join(option))
+#             # st.select_slider("Displayed values:", ["Normalized", "Absolute"])
 
 def something_is_in_the_way(a):
     st.write(str(a))
