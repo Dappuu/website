@@ -8,6 +8,18 @@ import webbrowser
 from PIL import Image
 
 
+st.set_page_config(
+    page_title="Datvilla",
+    page_icon="🧊",
+    layout="centered",
+    initial_sidebar_state="expanded",
+    menu_items={
+        'Get Help': 'https://www.extremelycoolapp.com/help',
+        'Report a bug': "https://www.extremelycoolapp.com/bug",
+        'About': "# This is a header. This is an *extremely* cool app!"
+    }
+)
+
 
 col1, col2, col3 = st.columns((2,4,1))
 with col1:
@@ -26,8 +38,8 @@ with col2:
     # st.title('Represent')
 st.markdown('# 30 days of NNN is over')
 
-df = pd.read_csv('Database.csv')
-st.write(df)
+# df = pd.read_csv('Database.csv')
+# st.write(df)
 
 with st.form("my_form"):
     option = st.multiselect(
