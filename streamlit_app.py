@@ -6,7 +6,7 @@ import altair as alt
 import pandas as pd
 import webbrowser
 from PIL import Image
-
+import database as db
 
 st.set_page_config(
     page_title="Datvilla",
