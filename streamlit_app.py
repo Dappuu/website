@@ -8,6 +8,25 @@ import webbrowser
 from PIL import Image
 import database as db
 
+def check1(us, col, c):
+    temp1 = np.array(us[col].split("-")).astype(float)
+    temp1 = np.ceil(temp1).astype(int)
+    if(len(temp1) > 1):
+        if temp1[0] in range(c[0],c[1]+1) and temp1[1] in range(c[0],c[1]+1):
+            return True
+    else:
+        if temp1 in range(c[0],c[1]+1) and temp1 in range(c[0],c[1]+1):
+            return True
+    
+    return False
+
+def check2(us, col, c):
+    temp1 = np.array(us[col].split("-")).astype(int)
+    if c in range(temp1[0],temp1[1]+1):
+        return True
+    
+    return False
+
 st.set_page_config(
     page_title="Datvilla",
     page_icon="🧊",
@@ -24,22 +43,10 @@ st.set_page_config(
 col1, col2, col3 = st.columns((2,4,1))
 with col1:
     st.image(Image.open('dark_logo.png'))
-    # if st.theme():
-    #     st.image(Image.open('logo.png'))
-    # else:
-    #     st.image(Image.open('dark_logo.png'))
-
-# st.plotly_chart(fig.update_layout(theme))
 with col2:
     st.header(' ')
     st.header('Knowledge Represent')
     st.markdown('Your choice, your comfort')
-# with col3: 
-    # st.title('Represent')
-# st.markdown('# 30 days of NNN is over')
-
-# df = pd.read_csv('Database.csv')
-# st.write(df)
 
 with st.form("my_form"):
     quan = st.multiselect(
@@ -56,7 +63,7 @@ if not quan and submitted==True:
 with st.expander('Bộ lọc'):
         # filter = st.button('Bộ lọc')
     if quan:
-        # with st.form("price"):
+        # with st.form("price"):s
             # st.write('Quận đã chọn: ', ', '.join(quan))   
             # st.text("Filter")
         money = st.slider('Giá tiền (triệu/m²)',0, 200, (0, 50))
@@ -69,51 +76,51 @@ with st.expander('Bộ lọc'):
             vs = st.selectbox('Số phòng vệ sinh', (1,2,3))
     search = st.button("Search")
     if search:
-        # st.write('Quận đã chọn: ', ', '.join(quan))
+        # st.write('Quận đã chọn: ', ', '.join(quan
         
         user = db.fetch_all_apartments()
-        for i in quan:
-            st.header('Quận ' + i)
-            dis = [us for us in user if us['districts']==i]
-            df = pd.DataFrame(dis)  
-            
-            # df = df[df['rates'] <= str(money[1])]
-            # df = df[df['rates'] >= str(money[0])]
-            # df = df[df['areas'] <= str(area[1])]
-            # df = df[df['areas'] >= str(area[0])]
-            # df = df[df['wc'] <= str(vs+1)]
-            # df = df[df['bedrooms'] >= str(sleep)]
-            if df.empty:
-                st.write('Không có kết quả phù hợp!')
+        dis = []
+        for us in user:
+            for i in quan:
+                if (us['districts'] == i):
+                    if(check1(us,'rates',money)):
+                        if(check1(us,'areas',area)):
+                            if(check2(us,'wc',vs)):
+                                if(check2(us,'bedrooms',sleep)):
+                                    dis.append(us)
 
-            
-            for i in range(len(df.iloc[:])):
-                d = df.iloc[i,:]
-                st.subheader(d['key'])
-                st.info(d['addresses'] + ", phường " + d['wards'] + ", quận " + d['districts'] + ', Tp.HCM', icon="🏢")
-                col1, col2, col3, col4 = st.columns((1.3,1,1,1.5))
-                with col1:
-                    st.info(d['areas'] + ' m²',icon='🛋')
-                with col2:
-                    st.success(d['bedrooms'],icon='🛏️')
-                with col3:
-                    st.warning(d['wc'],icon='🛁')
-                with col4:
-                    st.error(d['rates'] + " triệu/m²",icon='💲')
+        for q in quan:
+            st.header('Quận ' + q)
+            if (len(dis)==0):
+                st.write("Không tìm thấy dữ liệu phù hợp!")
+            else:
+                for d in dis:
+                    # dis = [us for us in user if us['districts']==i]
+                    # df = pd.DataFrame(dis)  
+                    
+                    # df = df[df['rates'] <= str(money[1])]
+                    # df = df[df['rates'] >= str(money[0])]
+                    # df = df[df['areas'] <= str(area[1])]
+                    # df = df[df['areas'] >= str(area[0])]
+                    # df = df[df['wc'] <= str(vs+1)]
+                    # df = df[df['bedrooms'] >= str(sleep)]
+
+                    
+                    
+                    st.subheader(d['key'])
+                    st.info(d['addresses'] + ", phường " + d['wards'] + ", quận " + d['districts'] + ', Tp.HCM', icon="🏢")
+                    col1, col2, col3, col4 = st.columns((1.3,1,1,1.5))
+                    with col1:
+                        st.info(d['areas'] + ' m²',icon='🛋')
+                    with col2:
+                        st.success(d['bedrooms'],icon='🛏️')
+                    with col3:
+                        st.warning(d['wc'],icon='🛁')
+                    with col4:
+                        st.error(d['rates'] + " triệu/m²",icon='💲')
             # pd  
         # st.write(user) 
                 # st.select_slider("Displayed values:", ["Normalized", "Absolute"])
-
-# with col2:
-#     if quan:
-#         with st.form('area'):
-#             with st.expander("filter"):
-#             # st.text("Filter")
-#                 money = st.slider('Diện tích (m²)', 0, 200, (0, 50))
-#             search = st.form_submit_button("Search")
-#             if search:
-#                 st.write('Quận đã chọn: ', ', '.join(quan))
-#             # st.select_slider("Displayed values:", ["Normalized", "Absolute"])
 
 url = 'https://youtu.be/'
 url_= 'dQw4w9WgXcQ'
