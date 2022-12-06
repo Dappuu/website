@@ -119,4 +119,4 @@ wcwidth @ file:///Users/ktietz/demo/mc3/conda-bld/wcwidth_1629357192024/work
 widgetsnbextension @ file:///home/conda/feedstock_root/build_artifacts/widgetsnbextension_1662157836868/work
 xyzservices @ file:///home/conda/feedstock_root/build_artifacts/xyzservices_1663619671984/work
 zipp @ file:///home/conda/feedstock_root/build_artifacts/zipp_1665306627898/work
-streamlit==0.75.0
+
