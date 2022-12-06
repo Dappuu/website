@@ -8,7 +8,6 @@ load_dotenv(".env")
 DETA_KEY = os.getenv("DETA_KEY")
 
 
-
 deta = Deta(DETA_KEY)
 
 db = deta.Base("rec_apartments")
