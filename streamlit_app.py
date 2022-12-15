@@ -8,6 +8,8 @@ import webbrowser
 from PIL import Image
 import database as db
 
+st.set_page_config(layout="wide")
+
 def check1(us, col, c):
     temp1 = np.array(us[col].split("-")).astype(float)
     temp1 = np.ceil(temp1).astype(int)
@@ -27,22 +29,11 @@ def check2(us, col, c):
     
     return False
 
-st.set_page_config(
-    page_title="Datvilla",
-    page_icon="🧊",
-    layout="centered",
-    initial_sidebar_state="expanded",
-    menu_items={
-        'Get Help': 'https://www.facebook.com/profile.php?id=100008279142274',
-        'Report a bug': "https://www.facebook.com/profile.php?id=100008279142274",
-        'About': "# if you have something to report dm https://www.facebook.com/profile.php?id=100008279142274"
-    }
-)
-
+# st.write()
 
 col1, col2, col3 = st.columns((2,4,1))
 with col1:
-    st.image(Image.open('dark_logo.png'))
+    st.image(Image.open('logo.png'))
 with col2:
     st.header(' ')
     st.header('Knowledge Represent')
@@ -51,19 +42,26 @@ with col2:
 with st.form("my_form"):
     quan = st.multiselect(
         'Quận',
-        ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', 
+        ('Select All','1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', 
         'Tân Bình', 'Bình Tân', 'Tân Phú', 'Bình Thạnh', 'Gò Vấp', 'Phú Nhuận',
         'Hóc Môn', 'Bình Chánh', 'Nhà Bè', 'Củ Chi'))
+    if quan == ["Select All"]:
+        # quan = ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', 
+        # 'Tân Bình', 'Bình Tân', 'Tân Phú', 'Bình Thạnh', 'Gò Vấp', 'Phú Nhuận',
+        # 'Hóc Môn', 'Bình Chánh', 'Nhà Bè', 'Củ Chi')
+        quan = ('1', '2', '3', '4', '5')
+    # st.write(quan)
 
     submitted = st.form_submit_button("Next")
+
 
 if not quan and submitted==True:
     st.warning("Hãy chọn quận!!",icon="⚠️")
 
 if len(quan)!=0:
     with st.expander('Bộ lọc'):
-        money = st.slider('Giá tiền (triệu/m²)',0, 200, (0, 50))
-        area = st.slider('Diện tích m²', 0, 500, (0, 70))
+        money = st.slider('Giá tiền (triệu/m²)',0, 200, (0, 200))
+        area = st.slider('Diện tích m²', 0, 500, (0, 500))
         col1, col2 = st.columns((1,1))
         with col1:
             sleep = st.selectbox('Số phòng ngủ', (1,2,3,4,5))
@@ -72,18 +70,17 @@ if len(quan)!=0:
         search = st.button("Search")
     if search:
         user = db.fetch_all_apartments()    
-        dis = []
-        for us in user:
-            for i in quan:
+        
+        for i in quan:
+            dis = []
+            for us in user:
                 if (us['districts'] == i):
                     if(check1(us,'rates',money)):
                         if(check1(us,'areas',area)):
                             if(check2(us,'wc',vs)):
                                 if(check2(us,'bedrooms',sleep)):
                                     dis.append(us)
-
-        for q in quan:
-            st.header('Quận ' + q)
+            st.header('Quận ' + i)
             if (len(dis)==0):
                 st.write("Không tìm thấy dữ liệu phù hợp!")
             else:
@@ -138,6 +135,8 @@ if len(quan)!=0:
                         with col4:
                             a=d['hospitals']
                             st.write(a) 
+            st.write('--------------------------')
+            
 
 url = 'https://youtu.be/'
 url_= 'dQw4w9WgXcQ'
@@ -145,6 +144,3 @@ url_= 'dQw4w9WgXcQ'
 if st.button('_do not click_ **this**'):
     webbrowser.open_new_tab(url+url_)
     st.caption('i told ya')
-
-
-
